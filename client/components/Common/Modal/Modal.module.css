@@ -1,0 +1,51 @@
+.modal {
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	left: 0;
+
+	display: none;
+	align-content: center;
+	justify-content: center;
+
+	width: 100%;
+	height: 100vh;
+
+	background: rgba(31, 31, 31, 0.2);
+	backdrop-filter: blur(1px);
+}
+
+.active {
+	display: grid;
+}
+
+.modalContent {
+	display: grid;
+	overflow-y: auto;
+	align-items: center;
+
+	max-height: 50vh;
+
+	padding: 20px;
+
+	border-radius: 5px;
+	outline: 1px solid var(--light);
+	background: var(--white);
+	justify-items: center;
+}
+
+.modalContent::-webkit-scrollbar {
+	width: 2px !important;
+}
+
+@media (max-width: 580px) {
+	.modalContent {
+		padding: 15px;
+	}
+}
+
+@media (max-width: 300px) {
+	.modalContent {
+		padding: 10px;
+	}
+}
