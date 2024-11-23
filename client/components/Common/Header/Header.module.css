@@ -1,0 +1,22 @@
+.header {
+	position: fixed;
+	z-index: 30;
+
+	display: grid;
+	align-items: center;
+
+	width: calc(100% - 80px);
+	gap: 20px;
+	padding: 20px 40px;
+
+	background-color: var(--white);
+	filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.1));
+	grid-template-columns: auto;
+}
+
+@media (max-width: 580px) {
+	.header {
+		width: calc(100% - 40px);
+		padding: 15px 20px;
+	}
+}

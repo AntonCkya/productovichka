@@ -1,0 +1,141 @@
+.searchWrapper {
+	position: relative;
+
+	display: grid;
+	align-items: center;
+}
+
+.searchIcon {
+	position: absolute;
+	right: 10px;
+
+	width: 24px;
+
+	fill: var(--darkLight);
+}
+
+.search {
+	width: calc(100% - 55px);
+	height: 20px;
+	padding: 10px 40px 10px 15px;
+
+	cursor: text;
+	transition-duration: 500ms;
+
+	color: var(--primary);
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	background: var(--light);
+
+	font-size: 16px;
+	font-weight: 600 !important;
+}
+
+.search::placeholder {
+	color: var(--darkLight);
+}
+
+.search:active,
+.search:focus {
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+	filter: brightness(0.9);
+}
+
+.dropdown {
+	position: absolute;
+	z-index: 20;
+	top: 100%;
+	left: 50%;
+
+	display: grid;
+
+	width: calc(100% - 20px);
+	padding: 10px;
+
+	transform: translateX(-50%);
+
+	border-radius: 5px;
+	background: var(--white);
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	grid-template-columns: 1fr;
+	gap: 10px;
+}
+
+.viewAll {
+	padding: 10px;
+
+	cursor: pointer;
+	transition-duration: 500ms;
+	text-align: center;
+
+	border-radius: 5px;
+	background: var(--light);
+}
+
+.viewAll > h1 {
+	color: var(--second);
+
+	font-weight: 600;
+}
+
+.dropdownItem > h1 {
+	transition-duration: 500ms;
+
+	color: var(--primary) !important;
+
+	font-weight: 500;
+}
+
+.dropdownItem:active > h1 {
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+	color: var(--second) !important;
+}
+
+.dropdownItem:last-child {
+	border-bottom: none;
+}
+
+.viewAll:active {
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+	filter: brightness(0.9);
+}
+
+.searchButton {
+	display: none;
+}
+
+@media (min-width: 1024px) {
+	.search:hover {
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+		filter: brightness(0.9);
+	}
+
+	.dropdownItem:hover h1 {
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+		color: var(--second) !important;
+	}
+
+	.viewAll:hover {
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+		filter: brightness(0.9);
+	}
+}
+
+@media (max-width: 580px) {
+	.dropdown {
+		width: max-content;
+	}
+}
+
+@media (max-width: 300px) {
+	.dropdown {
+		width: calc(100% - 20px);
+	}
+}
