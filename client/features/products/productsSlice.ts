@@ -5,8 +5,6 @@ import { ProductsInterface } from '../../interfaces/products.interface';
 const productsData: ProductsInterface = {
   products: [],
   total_count: -1,
-  limit: 0,
-  offset: 0,
 };
 
 export const productsSlice = createSlice({

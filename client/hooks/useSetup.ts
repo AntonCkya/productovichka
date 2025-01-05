@@ -8,10 +8,12 @@ export const useSetup = () => {
     const dispatch = useDispatch();
     
     const products = useSelector((state: AppState) => state.products.products);
+    const search = useSelector((state: AppState) => state.search.search);
 
     return {
         router,
         dispatch,
         products,
+        search,
     };
 };

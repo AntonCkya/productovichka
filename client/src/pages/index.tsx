@@ -7,11 +7,11 @@ import { getProducts } from "../../helpers/products.helper";
 
 
 function Main(): JSX.Element {
-  const { router, dispatch } = useSetup();
+  const { router, dispatch, search } = useSetup();
 
   useEffect(() => {
-    getProducts(dispatch);
-  }, [dispatch]);
+    getProducts(search, dispatch);
+  }, [search, dispatch]);
 
   return (
     <>

@@ -22,22 +22,6 @@
 	filter: brightness(0.9);
 }
 
-.productPhoto {
-	display: grid;
-	overflow: hidden;
-	align-items: center;
-
-	width: 100%;
-	height: 300px;
-
-	cursor: pointer;
-
-	border-radius: 5px;
-	background: var(--lighter);
-	justify-items: center;
-	object-fit: cover;
-}
-
 .productNameDiv {
 	display: grid;
 
@@ -47,15 +31,19 @@
 }
 
 .productName {
-	display: grid;
+	display: -webkit-box;
+	overflow: hidden;
 
+	text-overflow: ellipsis;
 	word-break: break-word;
 	hyphens: auto;
 
 	color: var(--primary);
 
 	font-weight: 600;
-	grid-template-columns: 1fr;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
 }
 
 .productType {

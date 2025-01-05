@@ -13,15 +13,19 @@ export const ProductsList = (): JSX.Element => {
         <>
             {
                 products.total_count > 0 ?
-                    <div className={styles.productsList}>
-                        {products.products.map(p => 
-                            <ProductItem key={p.id} name={p.name}
-                                description={p.description} price={p.price}
-                                photo={p.photo} type={p.type} />
-                        )}
-                    </div>
+                    <>
+                        <Htag tag='m' className={styles.notFoundText}>
+                            {setLocale(router.locale).products_found + ': ' + products.total_count}
+                        </Htag>
+                        <div className={styles.productsList}>
+                            {products.products.map(p =>
+                                <ProductItem key={p.id} name={p.name} description={p.description}
+                                    price={p.price} type={p.type} />
+                            )}
+                        </div>
+                    </>
                 : products.total_count === 0 ?
-                    <Htag tag='l' className={styles.notFoundText}>
+                    <Htag tag='m' className={styles.notFoundText}>
                         {setLocale(router.locale).no_products_found}
                     </Htag>
                 :
