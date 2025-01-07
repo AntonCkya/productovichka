@@ -54,7 +54,7 @@ async def get_embedding_bootleg(query: str = Query()):
 if __name__ == "__main__":
     run(
         "main:app",
-        host="localhost",
+        host="0.0.0.0",
         port=8001,
         reload=True,
         log_level="debug",

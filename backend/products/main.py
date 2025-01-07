@@ -41,7 +41,7 @@ async def add_product(
 if __name__ == "__main__":
     run(
         "main:app",
-        host="localhost",
+        host="0.0.0.0",
         port=8000,
         reload=True,
         log_level="debug",

@@ -1,0 +1,12 @@
+FROM pytorch/pytorch:latest
+
+WORKDIR /some
+
+RUN pip install uvicorn
+RUN pip install transformers
+RUN pip install fastapi
+RUN pip install sqlalchemy
+RUN pip install aiohttp
+COPY ./backend/ml_model ./
+EXPOSE  8001
+CMD ["python", "main.py"]

@@ -1,0 +1,11 @@
+FROM pytorch/pytorch:latest
+
+WORKDIR /some
+
+RUN pip install uvicorn
+RUN pip install transformers
+RUN pip install fastapi
+RUN pip install sqlalchemy
+COPY ./api ./
+EXPOSE  8000
+CMD ["python", "-m", "uvicorn", "sentiment_analyzer.api:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]

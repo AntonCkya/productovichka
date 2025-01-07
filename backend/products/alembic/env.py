@@ -10,7 +10,7 @@ from models import Base
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 
-db_host = "localhost"
+db_host = "psql.productovichka-main_app_network"
 db_port = "5432"
 db_user = "admin"
 db_password = "aboba"

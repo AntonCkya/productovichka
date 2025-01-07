@@ -1,0 +1,48 @@
+version: '3.3'
+
+services:
+  psql:
+    image: 'postgres:14'
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=mydb 
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=aboba
+      - DB_CONNECT_RETRY=20
+      - DB_POOL_SIZE=15
+    networks:
+      - app_network
+  api:
+    image: 'dima/product:0.0.11'
+    ports:
+      - "8000:8000"
+    networks:
+      - app_network
+    depends_on:
+      - psql
+    entrypoint: "python main.py"
+  ml:
+    image: dima/ml:0.0.3
+    ports:
+      - "8001:8001"
+    networks:
+      - app_network
+  client:
+    image: "dima/client:0.0.11"
+    ports:
+      - "3000:3000"
+    networks:
+      - app_network
+  helper:
+    image: 'dima/product:0.0.11'
+    networks:
+      - app_network
+    depends_on:
+      - psql
+    entrypoint: "alembic upgrade head"
+
+    
+
+networks:
+  app_network:

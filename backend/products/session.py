@@ -7,7 +7,7 @@ class SessionManager:
     engine = None  # Статический атрибут для движка
 
     def __init__(self) -> None:
-        self.db_host = "localhost"
+        self.db_host = "psql.productovichka-main_app_network"
         self.db_port = "5432"
         self.db_user = "admin"
         self.db_password = "aboba"
