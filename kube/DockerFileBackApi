@@ -4,16 +4,16 @@ WORKDIR /some
 
 RUN pip install uvicorn
 RUN pip install fastapi
-RUN pip install sqlalchemy
 RUN pip install aiohttp
 RUN pip install asyncio
 RUN pip install pydantic
 RUN pip install numpy
 RUN pip install asyncpg
 RUN pip install psycopg2
-RUN pip install python3-dotenv
+RUN pip install python-dotenv
+RUN pip install alembic
+RUN pip install sqlalchemy
 
 COPY ./backend/products ./
 EXPOSE  8000
-CMD ["alembic", "upgrade head"]
-CMD ["python", "main.py"]
+CMD ["alembic", " upgrade", " head", " && ",  "python", "main.py"]

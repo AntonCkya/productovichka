@@ -7,7 +7,7 @@ RUN pip install transformers
 RUN pip install fastapi
 RUN pip install sqlalchemy
 RUN pip install aiohttp
-RUN pip install python3-dotenv
+RUN pip install python-dotenv
 
 COPY ./backend/ml_model ./
 EXPOSE  8001

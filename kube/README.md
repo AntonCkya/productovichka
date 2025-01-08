@@ -20,4 +20,4 @@ docker-compose -f ./docker-compose.yaml up -d
 
 ## ВАЖНО: внутри есть сеть, поэтому все localhost должны быть вида psql.productovichka-main_app_network . Где первое это название контейнера из dockerCompose, а второе созданная сеть
 
-Не забываем в .env клиента прописать http://api.productovichka-main_app_network:8000
+Не забываем в .env клиента прописать http://api.productovichka_app_network:8000
