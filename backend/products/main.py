@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run
+from alembic.config import Config
+from alembic import command
 
 from api_v1 import api_router as v1_api_router
 from api_v2 import api_router as v2_api_router
@@ -19,6 +21,8 @@ app.include_router(v1_api_router)
 app.include_router(v2_api_router)
 
 if __name__ == "__main__":
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
     run(
         "main:app",
         host="0.0.0.0",
