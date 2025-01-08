@@ -58,6 +58,5 @@ if __name__ == "__main__":
         port=8001,
         reload=True,
         log_level="debug",
-        timeout_keep_alive=60,
-        workers=4
+        timeout_keep_alive=60
     )

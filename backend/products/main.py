@@ -1,12 +1,9 @@
-from fastapi import FastAPI, Query, Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run
 
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from client import get_embedding
-from session import get_session
-from models import Product, ProductInputModel
+from api_v1 import api_router as v1_api_router
+from api_v2 import api_router as v2_api_router
 
 app = FastAPI()
 
@@ -18,25 +15,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/add")
-async def add_product(
-    product: ProductInputModel,
-    session: AsyncSession = Depends(get_session)
-):
-    embedding = await get_embedding(product.name, real=False)
-    product_for_db = Product(
-        name = product.name,
-        description = product.description,
-        price = product.price,
-        type = product.type,
-        embedding = str(embedding)
-    )
-    session.add(product_for_db)
-    await session.commit()
-    await session.refresh(product_for_db)
-    return {
-        "message": "OK"
-    }
+app.include_router(v1_api_router)
+app.include_router(v2_api_router)
 
 if __name__ == "__main__":
     run(

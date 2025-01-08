@@ -16,7 +16,7 @@ db_user = "admin"
 db_password = "aboba"
 db_name = "mydb"
 DATABASE_URL = f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
-# DATABASE_URL = "postgresql://admin:aboba@localhost:5432/mydb"
+# DATABASE_URL = "postgresql://admin:aboba@psql.productovichka-main_app_network:5432/mydb"
 
 config = context.config
 fileConfig(config.config_file_name)
