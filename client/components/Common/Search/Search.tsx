@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 
 export const Search = (): JSX.Element => {
     const { router, dispatch, search } = useSetup();
+    
     const [inputValue, setInputValue] = useState<string>(search);
     const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 

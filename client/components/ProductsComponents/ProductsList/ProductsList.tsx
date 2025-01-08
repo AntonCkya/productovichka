@@ -19,8 +19,8 @@ export const ProductsList = (): JSX.Element => {
                         </Htag>
                         <div className={styles.productsList}>
                             {products.products.map(p =>
-                                <ProductItem key={p.id} name={p.name} description={p.description}
-                                    price={p.price} type={p.type} />
+                                <ProductItem key={p.id} productId={p.id} name={p.name}
+                                    description={p.description} price={p.price} type={p.type} />
                             )}
                         </div>
                     </>

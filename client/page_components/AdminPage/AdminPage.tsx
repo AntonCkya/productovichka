@@ -1,11 +1,12 @@
-import styles from './MainPage.module.css';
+import styles from './AdminPage.module.css';
 import { Toaster } from 'react-hot-toast';
 import { Header } from '../../components/Common/Header/Header';
 import { Footer } from '../../components/Common/Footer/Footer';
-import { ProductsList } from '../../components/ProductsComponents/ProductsList/ProductsList';
+import { AddForm } from '../../components/AdminComponents/AddForm/AddForm';
+import { RemoveForm } from '../../components/AdminComponents/RemoveForm/RemoveForm';
 
 
-export const MainPage = (): JSX.Element => {   
+export const AdminPage = (): JSX.Element => {   
     return (
         <>
             <Toaster
@@ -16,8 +17,9 @@ export const MainPage = (): JSX.Element => {
 				}}
 			/>
             <div className={styles.wrapper}>
-                <Header type='main' />
-                <ProductsList />
+                <Header type='admin' />
+                <AddForm />
+                <RemoveForm />
                 <Footer />
             </div>
         </>
