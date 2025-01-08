@@ -2,18 +2,21 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
 
+from getenv import get_dotenv_vars
+
 class SessionManager:
     DATABASE_URL: str
     engine = None  # Статический атрибут для движка
 
     def __init__(self) -> None:
-        self.db_host = "psql.productovichka-main_app_network"
-        self.db_port = "5432"
-        self.db_user = "admin"
-        self.db_password = "aboba"
-        self.db_name = "mydb"
+        vars = get_dotenv_vars()
+        DB_HOST = vars['DB_HOST']
+        DB_PORT = vars['DB_PORT']
+        DB_USER = vars['DB_USER']
+        DB_PASSWORD = vars['DB_PASSWORD']
+        DB_NAME = vars['DB_NAME']
 
-        self.DATABASE_URL = f"postgresql+asyncpg://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
+        self.DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
         if not SessionManager.engine:
             self.refresh()
 

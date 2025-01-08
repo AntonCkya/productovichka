@@ -6,16 +6,18 @@ from sqlalchemy import pool
 from alembic import context
 
 from models import Base
+from getenv import get_dotenv_vars
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 
-db_host = "psql.productovichka-main_app_network"
-db_port = "5432"
-db_user = "admin"
-db_password = "aboba"
-db_name = "mydb"
-DATABASE_URL = f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+vars = get_dotenv_vars()
+DB_HOST = vars['DB_HOST']
+DB_PORT = vars['DB_PORT']
+DB_USER = vars['DB_USER']
+DB_PASSWORD = vars['DB_PASSWORD']
+DB_NAME = vars['DB_NAME']
+DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 # DATABASE_URL = "postgresql://admin:aboba@psql.productovichka-main_app_network:5432/mydb"
 
 config = context.config
