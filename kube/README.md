@@ -6,7 +6,7 @@ docker build -f ./kube/DockerfileClient -t dima/client:0.0.11 .
 ```
 
 ```shell
-docker build -f ./kube/DockerfileBackApi -t dima/product:0.0.11 .
+docker build -f ./kube/DockerFileBackApi -t dima/product:0.0.11 .
 ```
 
 ```shell
