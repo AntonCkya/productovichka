@@ -68,7 +68,7 @@ async def pong(
     if not query:
         return [{"id": product.id, "name": product.name, "description": product.description, "price": product.price, "type": product.type, "score": 1} for product in products]
 
-    query_embedding = await get_embedding(product.name, real=True)
+    query_embedding = await get_embedding(query, real=True)
     query_result = []
 
     for product in products:

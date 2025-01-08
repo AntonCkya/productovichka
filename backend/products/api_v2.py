@@ -69,7 +69,7 @@ async def get_products(
     if not offset:
         offset = 0
 
-    query_embedding = await get_embedding(product.name, real=True)
+    query_embedding = await get_embedding(query, real=True)
     query_result = []
 
     for product in products:
