@@ -90,7 +90,7 @@ async def pong(
 
     return query_result
 
-@api_router.get("/all")
+@api_router.get("/api/v1/all")
 async def get_all_products(
     session: AsyncSession = Depends(get_session)
 ):
