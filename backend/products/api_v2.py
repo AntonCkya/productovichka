@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Optional
 
 import numpy as np
+from sqlalchemy.future import select
 
 from client import get_embedding
 from session import get_session
@@ -60,7 +61,8 @@ async def get_products(
     offset: Optional[int] = None,
     session: AsyncSession = Depends(get_session)
 ):
-    products = await session.query(Product).all()
+    result = await session.execute(select(Product))
+    products = result.scalars().all()
 
     if not query:
         query = ""

@@ -6,7 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
+from sqlalchemy.future import select
+from sqlalchemy.future import select
 
 tokenizer = AutoTokenizer.from_pretrained("DeepPavlov/rubert-base-cased-sentence", model_max_length=512)
 model = AutoModel.from_pretrained("DeepPavlov/rubert-base-cased-sentence")
@@ -57,7 +58,8 @@ app.add_middleware(
 
 @app.get("/ping")
 def pong(query: str = Query(default=None), db: SessionLocal = Depends(get_db)):
-    products = db.query(Product).all()
+    result = await session.execute(select(Product))
+    products = result.scalars().all()
 
     if not query:
         return [{"id": product.id, "name": product.name, "description": product.description, "price": product.price, "type": product.type, "score": 1} for product in products]
@@ -87,7 +89,8 @@ def pong(query: str = Query(default=None), db: SessionLocal = Depends(get_db)):
 
 @app.get("/all")
 def get_all_products(db: SessionLocal = Depends(get_db)):
-    products = db.query(Product).all()
+    result = await session.execute(select(Product))
+    products = result.scalars().all()
 
     return [{"id": product.id, "name": product.name, "description": product.description, "price": product.price, "type": product.type, "score": 1} for product in products]
 

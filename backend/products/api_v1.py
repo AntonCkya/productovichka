@@ -4,6 +4,7 @@ from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import numpy as np
+from sqlalchemy.future import select
 
 from client import get_embedding
 from session import get_session
@@ -61,7 +62,8 @@ async def pong(
     query: str = Query(default=None),
     session: AsyncSession = Depends(get_session)
 ):
-    products = await session.query(Product).all()
+    result = await session.execute(select(Product))
+    products = result.scalars().all()
 
     if not query:
         return [{"id": product.id, "name": product.name, "description": product.description, "price": product.price, "type": product.type, "score": 1} for product in products]
@@ -92,5 +94,6 @@ async def pong(
 async def get_all_products(
     session: AsyncSession = Depends(get_session)
 ):
-    products = await session.query(Product).all()
+    result = await session.execute(select(Product))
+    products = result.scalars().all()
     return [{"id": product.id, "name": product.name, "description": product.description, "price": product.price, "type": product.type, "score": 1} for product in products]
