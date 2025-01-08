@@ -1,0 +1,9 @@
+.wrapper {
+	display: grid;
+	align-items: start;
+
+	width: 100%;
+	min-height: 100vh;
+	justify-items: left;
+	grid-template-rows: auto auto 1fr;
+}

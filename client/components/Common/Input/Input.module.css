@@ -1,0 +1,54 @@
+.input {
+	width: calc(100% - 20px);
+	padding: 5px 10px;
+
+	transition-duration: 500ms;
+
+	color: var(--primary) !important;
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	background: var(--light) !important;
+
+	font-size: 16px;
+	font-weight: 500 !important;
+}
+
+.heightInput {
+	height: 40px;
+	padding: 0 10px;
+}
+
+.input::placeholder {
+	color: var(--darkLight);
+}
+
+.input:active,
+.input:focus {
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+	filter: brightness(0.9);
+}
+
+.error {
+	background: var(--errorBackground) !important;
+}
+
+.eye {
+	width: calc(100% - 45px);
+	padding-right: 35px;
+}
+
+@media (min-width: 1024px) {
+	.input:hover {
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+		filter: brightness(0.9);
+	}
+}
+
+@media (max-width: 580px) {
+	.heightInput {
+		height: 35px;
+	}
+}

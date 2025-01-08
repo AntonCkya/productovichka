@@ -11,7 +11,7 @@
 
 	background-color: var(--white);
 	filter: drop-shadow(0 5px 7px rgba(0, 0, 0, 0.1));
-	grid-template-columns: auto;
+	grid-template-columns: 1fr auto;
 }
 
 @media (max-width: 580px) {
