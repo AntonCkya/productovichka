@@ -16,7 +16,7 @@ async def get_embedding(query: str, real: bool = True):
 
 
 async def kafka_sendler(query: str, id: str, real: bool = True):
-    producer = AIOKafkaProducer(bootstrap_servers='kafka.productovichka_app_network:9092')
+    producer = AIOKafkaProducer(bootstrap_servers='kafka:29092')
     await producer.start()
     topic = "embedding_requests"
     message = {
@@ -35,7 +35,7 @@ async def send_message_to_kafka(query: str, id: str, real: bool = True):
 async def listen_to_kafka(id: str):
     consumer = AIOKafkaConsumer(
         "embedding_responses",
-        bootstrap_servers="kafka.productovichka_app_network:9092",
+        bootstrap_servers="kafka:29092",
         group_id="filter_group"
     )
     await consumer.start()

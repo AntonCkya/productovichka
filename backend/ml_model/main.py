@@ -6,6 +6,7 @@ from fastapi import FastAPI, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run
 import asyncio
+import logging
 
 from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
 import json
@@ -28,17 +29,22 @@ def embed_bert_cls(text, model, tokenizer):
 
     return embeddings[0].cpu().numpy().tolist()
 
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 async def consume_and_respond():
     consumer = AIOKafkaConsumer(
         "embedding_requests",
-        bootstrap_servers="kafka.productovichka_app_network:9092",
+        bootstrap_servers="kafka:29092",
         group_id="embedding_group"
     )
-    producer = AIOKafkaProducer(bootstrap_servers="kafka.productovichka_app_network:9092")
+    producer = AIOKafkaProducer(bootstrap_servers="kafka:29092")
+    logger.info(f"start app")
     await consumer.start()
     await producer.start()
     try:
         async for msg in consumer:
+            logger.info(f"new msg {msg}")
             message = json.loads(msg.value.decode("utf-8"))
             query = message["query"]
             request_id = message["id"]
@@ -57,6 +63,7 @@ async def consume_and_respond():
                 "id": request_id,
                 "embedding": embedding
             }
+            logger.info(f"Processed request {request_id}")
             await producer.send_and_wait(
                 "embedding_responses",
                 json.dumps(response).encode("utf-8")

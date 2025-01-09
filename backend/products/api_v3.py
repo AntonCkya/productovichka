@@ -73,7 +73,7 @@ async def get_products(
         offset = 0
 
     id = str(uuid.uuid4())
-    await send_message_to_kafka(product.name, id, real=True)
+    await send_message_to_kafka(query, id, real=True)
     query_embedding = await listen_to_kafka(id)
     query_result = []
 
