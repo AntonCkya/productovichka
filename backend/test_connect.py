@@ -5,7 +5,7 @@ try:
         dbname="mydb",
         user="admin",
         password="aboba",
-        host="psql.productovichka_app_network",
+        host="postgres-service",
         port="5432"
     )
     print("Connection successful!")

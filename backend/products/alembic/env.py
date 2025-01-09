@@ -18,7 +18,7 @@ DB_USER = vars['DB_USER']
 DB_PASSWORD = vars['DB_PASSWORD']
 DB_NAME = vars['DB_NAME']
 DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-# DATABASE_URL = "postgresql://admin:aboba@psql.productovichka-main_app_network:5432/mydb"
+# DATABASE_URL = "postgresql://admin:aboba@postgres-service:5432/mydb"
 
 config = context.config
 fileConfig(config.config_file_name)
