@@ -67,5 +67,6 @@ input:-webkit-autofill {
 	--darkLight: #A6A6A6;
 	--background: #F7F7F7;
 	--error: #FF3724;
+	--errorBackground: #FF857A4A;
 	--font-family: 'Roboto', sans-serif;
 }

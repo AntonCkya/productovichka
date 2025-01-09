@@ -6,6 +6,7 @@ from alembic import command
 
 from api_v1 import api_router as v1_api_router
 from api_v2 import api_router as v2_api_router
+from api_v3 import api_router as v3_api_router
 
 app = FastAPI()
 
@@ -19,6 +20,7 @@ app.add_middleware(
 
 app.include_router(v1_api_router)
 app.include_router(v2_api_router)
+app.include_router(v3_api_router)
 
 if __name__ == "__main__":
     alembic_cfg = Config("alembic.ini")

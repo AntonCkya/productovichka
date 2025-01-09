@@ -5,6 +5,11 @@ from transformers import AutoTokenizer, AutoModel
 from fastapi import FastAPI, Query, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run
+import asyncio
+import logging
+
+from aiokafka import AIOKafkaProducer, AIOKafkaConsumer
+import json
 
 from random import uniform
 
@@ -23,6 +28,50 @@ def embed_bert_cls(text, model, tokenizer):
     embeddings = torch.nn.functional.normalize(embeddings)
 
     return embeddings[0].cpu().numpy().tolist()
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+async def consume_and_respond():
+    consumer = AIOKafkaConsumer(
+        "embedding_requests",
+        bootstrap_servers="kafka:29092",
+        group_id="embedding_group"
+    )
+    producer = AIOKafkaProducer(bootstrap_servers="kafka:29092")
+    logger.info(f"start app")
+    await consumer.start()
+    await producer.start()
+    try:
+        async for msg in consumer:
+            logger.info(f"new msg {msg}")
+            message = json.loads(msg.value.decode("utf-8"))
+            query = message["query"]
+            request_id = message["id"]
+            is_real = message["real"]
+
+            embedding = []
+            if is_real:
+                model, tokenizer = model_init()
+                embedding = embed_bert_cls(query, model, tokenizer)
+            else:
+                len_res = 768
+                for _ in range(len_res):
+                    embedding.append(uniform(-1, 1))
+
+            response = {
+                "id": request_id,
+                "embedding": embedding
+            }
+            logger.info(f"Processed request {request_id}")
+            await producer.send_and_wait(
+                "embedding_responses",
+                json.dumps(response).encode("utf-8")
+            )
+    finally:
+        await consumer.stop()
+        await producer.stop()
+
 
 app = FastAPI()
 
@@ -50,6 +99,10 @@ async def get_embedding_bootleg(query: str = Query()):
     return {
         "embedding": res
     }
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(consume_and_respond())
 
 if __name__ == "__main__":
     run(
