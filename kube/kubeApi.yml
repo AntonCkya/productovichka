@@ -36,4 +36,4 @@ spec:
     port: 8000
     targetPort: 8000
     nodePort: 30006
-  type: ClusterIP
+  type: NodePort

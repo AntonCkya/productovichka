@@ -9,6 +9,7 @@ RUN pip install sqlalchemy
 RUN pip install aiohttp
 RUN pip install python-dotenv
 RUN pip install aiokafka
+RUN pip install py-spy
 
 COPY ./backend/ml_model ./
 EXPOSE  8001

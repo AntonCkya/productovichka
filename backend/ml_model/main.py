@@ -35,10 +35,10 @@ logger = logging.getLogger(__name__)
 async def consume_and_respond():
     consumer = AIOKafkaConsumer(
         "embedding_requests",
-        bootstrap_servers="kafka:29092",
+        bootstrap_servers="kafka-service:29092",
         group_id="embedding_group"
     )
-    producer = AIOKafkaProducer(bootstrap_servers="kafka:29092")
+    producer = AIOKafkaProducer(bootstrap_servers="kafka-service:29092")
     logger.info(f"start app")
     await consumer.start()
     await producer.start()

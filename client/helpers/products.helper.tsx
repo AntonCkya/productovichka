@@ -11,7 +11,7 @@ export async function getProducts(query: string, dispatch: any) {
         dispatch(setProductsDefault());
 
         const { data: response }: AxiosResponse<ProductItem[]> = await axios.get(process.env.NEXT_PUBLIC_DOMAIN +
-            '/ping?query=' + query,
+            '/product/ping?query=' + query,
         );
 
         dispatch(setProducts({
@@ -61,7 +61,7 @@ export async function addProduct(args: AddArguments) {
     const { router, setIsLoading, name, description, price, type } = args;
 
     try {
-        await axios.post(process.env.NEXT_PUBLIC_DOMAIN +
+        await axios.post(process.env.NEXT_PUBLIC_ADD_DOMAIN +
             `/add?name=${name}&description=${description}&price=${price}&type=${type}`,
         );
 
@@ -92,7 +92,7 @@ export async function removeProduct(args: RemoveArguments) {
     const { router, setIsLoading, productId } = args;
 
     try {
-        await axios.delete(process.env.NEXT_PUBLIC_DOMAIN +
+        await axios.delete(process.env.NEXT_PUBLIC_ADD_DOMAIN +
             `/delete/${productId}`,
         );
 

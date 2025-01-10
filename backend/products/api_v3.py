@@ -57,7 +57,7 @@ async def delete_product(
         await session.rollback()
         raise HTTPException(status_code=400, detail="what?")
 
-@api_router.get("/api/v3/product")
+@api_router.get("/api/v3/product/ping")
 async def get_products(
     query: Optional[str] = Query(default=None),
     limit: Optional[int] = None,
