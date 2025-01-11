@@ -38,11 +38,12 @@ spec:
 ---
 
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: kafka
+  labels:
+    app: kafka
 spec:
-  serviceName: kafka
   replicas: 1
   selector:
     matchLabels:

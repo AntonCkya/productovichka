@@ -57,6 +57,18 @@ async def delete_product(
         await session.rollback()
         raise HTTPException(status_code=400, detail="what?")
 
+
+from multiprocessing import Value, Lock
+
+# Инициализация счетчика и блокировки
+counter = Value('i', 0)  # 'i' означает целое число
+lock = Lock()
+
+def increment():
+    with lock:  # Блокировка для обеспечения безопасности потока
+        counter.value += 1  # Увеличиваем значение счетчика
+        return counter.value  # Возвращаем новое значение
+
 @api_router.get("/api/v3/product/ping")
 async def get_products(
     query: Optional[str] = Query(default=None),
@@ -74,7 +86,7 @@ async def get_products(
 
     id = str(uuid.uuid4())
     await send_message_to_kafka(query, id, real=True)
-    query_embedding = await listen_to_kafka(id)
+    query_embedding = await listen_to_kafka(id, query, increment())
     query_result = []
 
     for product in products:

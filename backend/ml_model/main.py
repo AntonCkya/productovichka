@@ -29,14 +29,15 @@ def embed_bert_cls(text, model, tokenizer):
 
     return embeddings[0].cpu().numpy().tolist()
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 async def consume_and_respond():
     consumer = AIOKafkaConsumer(
         "embedding_requests",
         bootstrap_servers="kafka-service:29092",
-        group_id="embedding_group"
+        group_id="embedding_group",
+        enable_auto_commit=True
     )
     producer = AIOKafkaProducer(bootstrap_servers="kafka-service:29092")
     logger.info(f"start app")
