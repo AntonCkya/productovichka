@@ -14,8 +14,8 @@ import json
 from random import uniform
 
 def model_init():
-    tokenizer = AutoTokenizer.from_pretrained("DeepPavlov/rubert-base-cased-sentence", model_max_length=512)
-    model = AutoModel.from_pretrained("DeepPavlov/rubert-base-cased-sentence")
+    tokenizer = AutoTokenizer.from_pretrained("sergeyzh/rubert-tiny-turbo", model_max_length=512)
+    model = AutoModel.from_pretrained("sergeyzh/rubert-tiny-turbo")
     return model, tokenizer
 
 def embed_bert_cls(text, model, tokenizer):
