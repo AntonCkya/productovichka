@@ -55,7 +55,7 @@ async def consume_and_respond():
                 model, tokenizer = model_init()
                 embedding = embed_bert_cls(query, model, tokenizer)
             else:
-                len_res = 768
+                len_res = 312
                 for _ in range(len_res):
                     embedding.append(uniform(-1, 1))
 
@@ -92,7 +92,7 @@ async def get_embedding(query: str = Query(), mt = Depends(model_init)):
 
 @app.get("/embedding_bootleg")
 async def get_embedding_bootleg(query: str = Query()):
-    len_res = 768
+    len_res = 312
     res = []
     for _ in range(len_res):
         res.append(uniform(-1, 1))
