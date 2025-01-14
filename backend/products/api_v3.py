@@ -18,10 +18,16 @@ api_router = APIRouter(tags=["v3"])
 @api_router.post("/api/v3/add")
 async def add_product(
     product: ProductInputModel,
+    with_description: Optional[bool] = None,
     session: AsyncSession = Depends(get_session)
 ):
+    if not with_description:
+        with_description = False
     id = str(uuid.uuid4())
-    await send_message_to_kafka(product.name, id, real=True)
+    query = product.name
+    if with_description:
+        query += " " + product.description
+    await send_message_to_kafka(query, id, real=True)
     embedding = await listen_to_kafka(id)
     product_for_db = Product(
         name = product.name,
