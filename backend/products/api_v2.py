@@ -17,34 +17,37 @@ api_router = APIRouter(tags=["v2"])
 @api_router.post("/api/v2/add")
 async def add_product(
     product: ProductInputModel,
-    with_description: Optional[bool] = None,
     session: AsyncSession = Depends(get_session)
 ):
-    if not with_description:
-        with_description = False
-        
     query = product.name
-    if with_description:
+
+    if product.description:
         query += " " + product.description
         
     embedding = await get_embedding(query, real=True)
+    
     product_for_db = Product(
-        name = product.name,
-        description = product.description,
-        price = product.price,
-        type = product.type,
-        embedding = str(embedding)
+        name=product.name,
+        description=product.description,
+        price=product.price,
+        type=product.type,
+        embedding=str(embedding)
     )
+    
     session.add(product_for_db)
     try:
         await session.commit()
         await session.refresh(product_for_db)
         return {
-            "message": "OK"
+            "message": "OK",
+            "product_id": product_for_db.id
         }
-    except Exception as _:
+    except Exception as e:
         await session.rollback()
-        raise HTTPException(status_code=400, detail="what?")
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Ошибка при добавлении продукта: {str(e)}"
+        )
 
 @api_router.delete("/api/v2/delete/{product_id}")
 async def delete_product(
@@ -65,6 +68,8 @@ async def delete_product(
 @api_router.get("/api/v2/product")
 async def get_products(
     query: Optional[str] = Query(default=None),
+    search_description: Optional[bool] = Query(default=True),
+    min_score: Optional[float] = Query(default=0.0),
     limit: Optional[int] = None,
     offset: Optional[int] = None,
     session: AsyncSession = Depends(get_session)
@@ -81,20 +86,29 @@ async def get_products(
     query_result = []
 
     for product in products:
+        product_text = product.name
+
+        if search_description and product.description:
+            product_text += " " + product.description
+            
         product_embedding = np.array(eval(product.embedding))
+        
         distance = np.dot(product_embedding, query_embedding) / (
             np.linalg.norm(product_embedding) * np.linalg.norm(query_embedding)
         )
-        query_result.append({
-            "id": product.id,
-            "name": product.name,
-            "description": product.description,
-            "price": product.price,
-            "type": product.type,
-            "score": float(distance)
-        })
+        
+        if distance >= min_score:
+            query_result.append({
+                "id": product.id,
+                "name": product.name,
+                "description": product.description,
+                "price": product.price,
+                "type": product.type,
+                "score": float(distance)
+            })
 
     query_result.sort(key=lambda x: x["score"], reverse=True)
+    
     if not limit:
         return query_result[offset:]
     else:
