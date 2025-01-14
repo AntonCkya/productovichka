@@ -17,9 +17,17 @@ api_router = APIRouter(tags=["v2"])
 @api_router.post("/api/v2/add")
 async def add_product(
     product: ProductInputModel,
+    with_description: Optional[bool] = None,
     session: AsyncSession = Depends(get_session)
 ):
-    embedding = await get_embedding(product.name, real=True)
+    if not with_description:
+        with_description = False
+        
+    query = product.name
+    if with_description:
+        query += " " + product.description
+        
+    embedding = await get_embedding(query, real=True)
     product_for_db = Product(
         name = product.name,
         description = product.description,

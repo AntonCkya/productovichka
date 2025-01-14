@@ -4,12 +4,12 @@ import { Htag } from '../../Common/Htag/Htag';
 import { formatPrice } from '../../../helpers/format.helper';
 
 
-export const ProductItem = ({ productId, name, description, price, type }: ProductItemProps): JSX.Element => {
+export const ProductItem = ({ productId, name, description, price, type, score }: ProductItemProps): JSX.Element => {
     return (
         <div className={styles.productItem}>
             <div className={styles.productNameDiv}>
                 <Htag tag={'m'} className={styles.productName}>
-                    {name + ` (ID: ${productId})`}
+                    {name + ` (ID: ${productId}, score: ${score.toFixed(3)})`}
                 </Htag>
                 <Htag tag='s' className={styles.productType}>
                     {type}

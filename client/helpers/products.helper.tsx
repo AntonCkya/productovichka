@@ -11,7 +11,7 @@ export async function getProducts(query: string, dispatch: any) {
         dispatch(setProductsDefault());
 
         const { data: response }: AxiosResponse<ProductItem[]> = await axios.get(process.env.NEXT_PUBLIC_DOMAIN +
-            '/ping?query=' + query,
+            '/product?query=' + query,
         );
 
         dispatch(setProducts({

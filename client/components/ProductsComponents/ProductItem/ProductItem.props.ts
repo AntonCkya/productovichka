@@ -7,4 +7,5 @@ export interface ProductItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLD
     description: string,
     price: number,
     type: string,
+    score: number,
 }
